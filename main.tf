@@ -4,7 +4,7 @@ tags = var.tags
 
 }
 
-resource s3_bucket_public_access_block "my_cv_bucket_public_access" {
+resource aws_s3_bucket_public_access_block "my_cv_bucket_public_access" {
   bucket = aws_s3_bucket.my_cv_bucket.id
     block_public_acls       = true
     block_public_policy     = false
@@ -12,7 +12,7 @@ resource s3_bucket_public_access_block "my_cv_bucket_public_access" {
     restrict_public_buckets = true
 }
 
-resource s3_website_configuration "my_cv_bucket_website" {
+resource aws_s3_website_configuration "my_cv_bucket_website" {
   bucket = aws_s3_bucket.my_cv_bucket.id
 
   index_document {
@@ -24,18 +24,19 @@ resource s3_website_configuration "my_cv_bucket_website" {
   }
 }
 
-resource cloudfront_origin_access-control "my_cv_bucket_oac" {
+resource aws_cloudfront_origin_access_control "my_cv_bucket_oac" {
   name            = "my-cv-bucket-oac"
   origin_access_control_origin_type = "s3"
   signing_behavior = "always"
   signing_protocol = "sigv4"
 }
 
-resource cloudfront_distribution "my_cv_bucket_distribution" {
+
+resource aws_cloudfront_distribution "my_cv_bucket_distribution" {
   origin {
     domain_name = aws_s3_bucket.my_cv_bucket.website_endpoint
     origin_id   = "S3-bucket-origin"
-    cloudfront_origin_access_control_id = cloudfront_origin_access_control.my_cv_bucket_oac.id
+    origin_access_control_id = aws_cloudfront_origin_access_control.my_cv_bucket_oac.id
   }
 
 
@@ -74,3 +75,4 @@ resource cloudfront_distribution "my_cv_bucket_distribution" {
 
   tags = var.tags
 }
+
