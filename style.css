@@ -18,7 +18,7 @@
     --accent: 285 65% 55%;
     --accent-foreground: 0 0% 100%;
     --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 40%;
+    --muted-foreground: 0 0% 35%;
     --border: 0 0% 90%;
     
     /* Shadows */
@@ -26,24 +26,96 @@
     --shadow-medium: 0 12px 48px rgba(0, 0, 0, 0.12);
 }
 
+
 body {
-    font-family: 'Times New Roman', sans-serif;
-    background: hsl(var(--background));
-    color: hsl(var(--foreground));
-    line-height: 1.2;
-    -webkit-font-smoothing: antialiased;
-    /* background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary))); */
+  font-family: 'Rubik', sans-serif;
+  color: var(--text);
+  background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+  transition: background 0.4s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+}
+body.dark {
+  --card-bg: rgba(20, 24, 36, 0.86);
+  --text: #e6eef8;
+  --muted: #c4cfda;
+  --bg1: #06202a;
+  --bg2: #081232;
+}
+
+/* === DARK MODE ENHANCEMENTS === */
+body.dark .card h2,
+body.dark .card p,
+body.dark .card li,
+body.dark .summary-text,
+body.dark .section-title,
+body.dark .experience-title,
+body.dark .project-title,
+body.dark .education-title,
+body.dark .cert-title,
+body.dark .contact-item a {
+  color: #f5faff; /* clean white text */
 }
 
 .container {
     min-height: 100vh;
 }
 
+/* === HEADER === */
+.header {
+  background: linear-gradient(135deg, var(--teal-1), var(--teal-2));
+  color: white;
+  text-align: center;
+  padding: 48px 16px 36px;
+  position: relative;
+}
+
+body.dark .header {
+  background: linear-gradient(135deg, #004a44, #0f3a6b);
+}
+
+/* === PROFILE PHOTO === */
+.photo-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.photo-wrap img {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 12px 30px rgba(2, 12, 14, 0.25);
+  transition: transform 0.25s ease;
+}
+
+.photo-wrap img:hover {
+  transform: scale(1.03);
+}
+
+.theme-toggle {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Header Styles */
 .header {
     background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
     color: hsl(var(--primary-foreground));
-    padding: 4rem 1.2rem;
+    padding: 1.5rem 1.2rem;
 }
 
 .header-content {
@@ -53,13 +125,14 @@ body {
 }
 
 .header-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 3.5rem;
-    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.5rem;
+    font-weight: 200;
     margin-bottom: 1rem;
 }
 
 .header-subtitle {
+    font-family: 'Poppins', sans-serif;
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
     opacity: 0.95;
@@ -102,9 +175,9 @@ body {
 
 /* Section Titles */
 .section-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Rubik', serif;
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: 500;
     margin-bottom: 1.5rem;
     color: hsl(var(--foreground));
     display: flex;
@@ -114,12 +187,13 @@ body {
 
 /* Cards */
 .card {
-    background: hsl(var(--card));
-    border: 1px solid hsl(var(--border));
-    border-radius: 0.75rem;
-    padding: 1.5rem;
-    box-shadow: var(--shadow-soft);
-    transition: all 0.3s ease;
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 16px 0;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  transition: transform 0.18s ease, background 0.3s;
 }
 
 .summary-text {
@@ -133,12 +207,14 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+
 }
+
 
 .badge {
     background: hsl(var(--secondary));
     color: hsl(var(--secondary-foreground));
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.5rem;
     border-radius: 0.5rem;
     font-size: 0.875rem;
     font-weight: 500;
@@ -262,6 +338,12 @@ body {
 }
 
 /* Certifications */
+.certifications-grid .card {
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  margin: 0.5rem;
+}
+
 .certifications-grid {
     display: grid;
     gap: 1rem;
@@ -353,7 +435,7 @@ body {
     }
     
     .header-title {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
     
     .header-subtitle {

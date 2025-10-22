@@ -76,3 +76,33 @@ resource "aws_cloudfront_distribution" "my_cv_s3_distribution" {
   tags = var.tags
 }
 
+resource "aws_s3_bucket_policy" "my_cv_bucket_policy" {
+  bucket     = aws_s3_bucket.my_cv_bucket.id
+  policy     = data.aws_iam_policy_document.allow_cloudfront_read.json
+  depends_on = [aws_s3_bucket_public_access_block.my_cv_bucket_public_access]
+}
+
+resource "aws_s3_bucket_object" "index_html" {
+  bucket       = aws_s3_bucket.my_cv_bucket.id
+  key          = "index.html"
+  source       = "index.html"
+  content_type = "text/html"
+  etag         = filemd5("index.html")
+}
+
+resource "aws_s3_bucket_object" "styles_css" {
+  bucket       = aws_s3_bucket.my_cv_bucket.id
+  key          = "style.css"
+  source       = "style.css"
+  content_type = "text/css"
+  etag         = filemd5("style.css")
+}
+
+resource "aws_s3_bucket_object" "images" {
+  bucket       = aws_s3_bucket.my_cv_bucket.id
+  key          = "profile.png"
+  source       = "profile.png"
+  content_type = "image/png"
+  etag         = filemd5("profile.png")
+}
+
